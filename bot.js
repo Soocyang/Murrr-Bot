@@ -22,12 +22,12 @@ client.on('ready', () => {
 });
 
 //This when user delete message YELL AT THEM!!!!
-client.on('messageDelete', msg => {
-    // Create the attachment using MessageAttachment
-    const attachment = new Discord.MessageAttachment('https://images-ext-2.discordapp.net/external/gSnYcbkGLhtVvwNloUomWx0762Nnfeduwkembi-SBy0/https/media.discordapp.net/attachments/620183192879628298/735538633255419924/unknown.png');
-    // Send the attachment in the message channel
-    msg.channel.send(attachment);
-});
+// client.on('messageDelete', msg => {
+//     // Create the attachment using MessageAttachment
+//     const attachment = new Discord.MessageAttachment('https://images-ext-2.discordapp.net/external/gSnYcbkGLhtVvwNloUomWx0762Nnfeduwkembi-SBy0/https/media.discordapp.net/attachments/620183192879628298/735538633255419924/unknown.png');
+//     // Send the attachment in the message channel
+//     msg.channel.send(attachment);
+// });
 
 
 //Default message reply memes
