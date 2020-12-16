@@ -68,6 +68,10 @@ client.on('message', msg => {
     const attachment = new Discord.MessageAttachment('./resource/memes/mur_tolerate.jpg');
     msg.channel.send(attachment);
   }
+  else if(msg.content === 'noice'){
+    const attachment = new Discord.MessageAttachment('./resource/memes/mur_noice.jpg');
+    msg.channel.send(attachment);
+  }
   else{
     return;
   }
