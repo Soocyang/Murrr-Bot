@@ -5,7 +5,7 @@ const client = new Discord.Client({
     partials: ['MESSAGE'],
 });
 
-const PREFIX = '>'
+const PREFIX = '~'
 const ROLE_COLOR = {
   sky: '787976983714988042',
   mint: '788222969549684767',
@@ -48,7 +48,7 @@ client.on('message', msg => {
     const attachment = new Discord.MessageAttachment('./resource/memes/mur_lc.jpg');
     msg.channel.send(attachment);
   }
-  else if(msg.content === 'heart break'){
+  else if(msg.content === 'sadED'){
     const attachment = new Discord.MessageAttachment('./resource/memes/mur_heartbreak.jpg');
     msg.channel.send(attachment);
   }
@@ -98,12 +98,13 @@ client.on('message', msg => {
   else if(command === 'help'){
     help(msg);
   }
+  else if(command === 'admhelp'){
+    adminHelp(msg);
+  }
   else if(command === 'avatar'){
     checkArgs(msg, args);
     avatar(msg);
   }
-
-
 });
 
 function checkArgs(msg, args){
@@ -128,24 +129,35 @@ function clearChat(msg, numbers){
     .catch(console.error);
 }
 
+function adminHelp(msg){
+  const embed = new Discord.MessageEmbed()
+                .setAuthor(client.user.username, client.user.displayAvatarURL())              
+                .setColor(0x3ba3ee)
+                .setTitle('Help? NO')
+                .setDescription('Jk 🌚')
+                .addField('Murrr cmd', 'murrr\nshock\nnoted\nlc\nsad\nomg\nroll\nnoice\nsadED\n忍')
+                .addField('Admin cmd', 'Bulk delete messages e.g. `~clearchat 5` ')
+  msg.channel.send(embed);
+}
+
 function help(msg){
   const embed = new Discord.MessageEmbed()
-                .setAuthor(client.user.username, client.user.displayAvatarURL)              
-                .setColor(0xffa8a8)
-                .setDescription('Commands Listing')
-                .addField('Avatar','Show profile pics e.g. `>avatar @user`')
-                .addField('Roles', 'Select a role color e.g. `>role mint`  \n' + 
-                              '1. sky\n 2. mint\n 3. grape \n 4. peach \n 5. lemon \n 6. orange')
-                .addField('Memes', 'to be cont...')
-
-
+                .setAuthor(client.user.username, client.user.displayAvatarURL())              
+                .setColor(0x3ba3ee)
+                .setTitle('Help? NO')
+                .setDescription('Jk 🌚')
+                .addField('Murrr cmd', 'murrr\nshock\nnoted\nlc\nsad\nomg\nroll\nnoice\nsadED\n忍')
   msg.channel.send(embed);
 }
 
 function avatar(msg){
   const user = msg.mentions.users.first();
   if(user == null) return;
-  msg.channel.send(user.displayAvatarURL());
+  const embed = new Discord.MessageEmbed()
+                .setAuthor(user.username)
+                .setColor(0x3ba3ee)
+                .setThumbnail(user.displayAvatarURL())
+  msg.channel.send(embed);
 }
 
 
