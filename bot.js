@@ -27,7 +27,7 @@ for(const file of commandFiles){
 //Bot activity status
 client.on('ready', () => {
   console.log("Bot is ready!!!");
-  client.user.setActivity('weird knowledge', { type:'PLAYING' });
+  client.user.setActivity('Mr & Mrs Gao', { type:'WATCHING' });
 });
 
 //This when user delete message YELL AT THEM!!!!
