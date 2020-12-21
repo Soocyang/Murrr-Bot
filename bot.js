@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+const fetch = require('node-fetch');
 const Discord = require('discord.js');
 const Sequelize = require('sequelize');
 const client = new Discord.Client({
@@ -110,6 +111,22 @@ client.on('message', async msg => {
   else if(command === 'guild'){
     msg.channel.send(msg.guild.id);
   }
+  else if(command === 'cat'){
+    const { file } = await fetch('https://aws.random.cat/meow').then(response => response.json());
+	  msg.channel.send(file);
+  }
+  else if(command === 'playfbi'){
+    if (msg.member.voice.channel) {
+      const connection = await msg.member.voice.channel.join();
+      play(connection);
+    }
+  }
+  else if(command === 'dis'){
+    if (msg.member.voice.channel) {
+      const connection = msg.member.voice.channel;
+      connection.disconnect();
+    }
+  }
 
 
 });
@@ -137,6 +154,25 @@ function modUser(msg, color){
       msg.member.roles.add(ROLE_COLOR[key])
     }
   }
+}
+
+
+async function play(voiceChannel) {
+  const dispatcher = voiceChannel.play('./resource/y2mate_OzpmNhZ.mp3');
+
+  dispatcher.on('start', () => {
+    console.log('y2mate_OzpmNhZ.mp3 is now playing!');
+  });
+  
+  dispatcher.on('finish', () => {
+    dispatcher.destroy();
+    console.log('y2mate_OzpmNhZ.mp3 finished playing!');
+    voiceChannel.disconnect();
+  });
+  
+  // Always remember to handle errors appropriately!
+  dispatcher.on('error', console.error);
+
 }
 
 //Login bot
