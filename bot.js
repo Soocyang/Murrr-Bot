@@ -116,17 +116,26 @@ client.on('message', async msg => {
 	  msg.channel.send(file);
   }
   else if(command === 'playfbi'){
-    if (msg.member.voice.channel) {
-      const connection = await msg.member.voice.channel.join();
-      play(connection);
-    }
+    // if (msg.member.voice.channel) {
+    //   const connection = await msg.member.voice.channel.join();
+    //   play(connection);
+    // }
+    msg.reply('Cmd Disabled :D');
+  }
+  else if(command === 'play' || command === 'p'){
+    client.commands.get('play').execute(msg, args);    
   }
   else if(command === 'dis'){
-    if (msg.member.voice.channel) {
-      const connection = msg.member.voice.channel;
-      connection.disconnect();
-    }
+    client.commands.get('leave').execute(msg, args);
   }
+  else if(command === 'pause'){
+    client.commands.get('pause').execute(msg, args);
+  }
+  else if(command === 'resume'){
+    client.commands.get('resume').execute(msg, args);
+  }
+
+
 
 
 });
