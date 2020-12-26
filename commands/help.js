@@ -13,6 +13,11 @@ module.exports = {
                         .setDescription(
                             'Need help? Here it is.\n\n' + 
                             '**Commands**\n\n' +
+                            '**Musics**\n' +
+                            '`~p or ~play [song name] or [url]` to **Add** song or queue \n' + 
+                            '`~q or ~queue` to view the song list/ Song **Queue**\n' +
+                            '`~skip` to **Skip** current track \n' +
+                            '`~dis or ~disconnect` to **Disconect** bot\n\n' +
                             '**Tags**\n' +
                             '`~tag add [name] [description]` to **Add** tag \n' + 
                             '`~tag edit [name] [description]` to **Edit** tag \n' +
