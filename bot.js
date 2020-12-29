@@ -64,7 +64,8 @@ client.on('ready', () => {
   console.log("Bot is ready!!!");
   let statusCounter = 0;
   const statuses = ['Mr & Mrs Gao', 'Kurzgesagt – In a Nutshell', 'TEDx Talks', 'Vsauce', 'Li Ke Tai Tai', 'Veritasium'];
-  const statusItv = setInterval(updateStatus, 600000);
+
+  const statusItv = setInterval(updateStatus, 300000);
 
   function updateStatus(){
     client.user.setActivity(`${statuses[statusCounter]} ` + '| ~help', { type:'WATCHING' });
