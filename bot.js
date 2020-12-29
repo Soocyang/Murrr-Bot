@@ -58,10 +58,21 @@ for(const file of commandFiles){
 
 
 
+
 //Bot activity status
 client.on('ready', () => {
   console.log("Bot is ready!!!");
-  client.user.setActivity('Mr & Mrs Gao', { type:'WATCHING' });
+  let statusCounter = 0;
+  const statuses = ['Mr & Mrs Gao', 'Kurzgesagt – In a Nutshell', 'TEDx Talks', 'Vsauce', 'Li Ke Tai Tai', 'Veritasium'];
+  const statusItv = setInterval(updateStatus, 600000);
+
+  function updateStatus(){
+    client.user.setActivity(`${statuses[statusCounter]} ` + '| ~help', { type:'WATCHING' });
+    if(statusCounter == statuses.length - 1){
+    	statusCounter = -1;
+    }
+    statusCounter++;
+  }
 });
 
 //Default message reply memes
