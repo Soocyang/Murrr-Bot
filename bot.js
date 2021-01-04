@@ -179,6 +179,7 @@ let connection;
 let dispatcher;
 let isPlaying = 0;
 let musicQueue = [];
+let loopFlag = 0;
 const streamOptions = {
   seek: 0,
   volumn: 0.5
@@ -192,6 +193,7 @@ client.on('message', async msg => {
   if(command === 'play' || command === 'p'){
     
     const searchKeysUrl = args.join(' ');
+    if(searchKeysUrl == '') return msg.reply('You need to provide a search key or youtube url');
     const voiceChannel = msg.member.voice.channel;
     if(!voiceChannel) return msg.reply('You need to be in a voice channel to execute this command!');
 
@@ -268,11 +270,19 @@ client.on('message', async msg => {
       for(var i = 1; i < musicQueue.length; i++){
         upNext += `${i}. "` + (await ytdl.getBasicInfo(musicQueue[i])).videoDetails.title + '"\n';
       }
+
+      if(loopFlag == 1){
+        currentlyPlaying += '" 🎶 >> 🔂Looping ';
+      }        
+      else{
+        currentlyPlaying += '" 🎶';
+      }
+
       msg.channel.send('```bash\n'+
                       'Song List\n' +
                       '---------\n' +
                       'Currently Playing\n' + 
-                      `▶️ "${currentlyPlaying}" 🎶\n\n` +
+                      `▶️ "${currentlyPlaying}\n\n` +
                       'Coming Up Next Songs\n' +
                       `${upNext}` +
                       '```');
@@ -290,6 +300,7 @@ client.on('message', async msg => {
    
     if(musicQueue.length === 1) return msg.reply('You are skipping the last song!');
     
+    loopFlag = 0;
     musicQueue.shift();
 
     try{
@@ -308,6 +319,14 @@ client.on('message', async msg => {
   else if(command === 'resume'){
     dispatcher.resume();
     msg.react('▶️');
+  }
+  else if(command === 'loop'){
+    loopFlag = 1;
+    msg.react('🔂');
+  }
+  else if(command === 'loopoff'){
+    loopFlag = 0;
+    msg.react('⏩');
   }
   else if(command === 'remove'){
 
@@ -342,6 +361,7 @@ client.on('message', async msg => {
     await msg.react('🛑');
     await msg.channel.send('Murrr has leave the channel :C');
     isPlaying = 0;
+    loopFlag = 0;
     musicQueue = [];
 
   }
@@ -364,18 +384,21 @@ async function playSong(msg, connection, voiceChannel) {
   //console.log(stream);
 
   dispatcher.on('finish', () => {
-    musicQueue.shift();
 
-    setTimeout(() => {
-      if(musicQueue.length == 0){
-        isPlaying = 0;
-        voiceChannel.leave();
-      }
-      else{
-        playSong(msg, connection, voiceChannel);
-      }
-    }, 5000)
-
+    if(loopFlag == 0){
+      musicQueue.shift();
+      setTimeout(() => {
+        if(musicQueue.length == 0){
+          isPlaying = 0;
+          voiceChannel.leave();
+        }
+        else{
+          playSong(msg, connection, voiceChannel);
+        }
+      }, 5000)
+    }else{
+      playSong(msg, connection, voiceChannel);
+    }
   })
 }
 
