@@ -16,11 +16,12 @@ module.exports = {
                             '**:headphones: Musics :musical_note:**\n' +
                             '`~p or ~play [song name] or [url]` to **Add** song or queue \n' + 
                             '`~q or ~queue` to view the song list/ Song **Queue**\n' +
-                            '`~remove [index/number]` to **Remove** the song\n' +
+                            '`~remove/delete [index/number]` to **Remove** the song\n' +
                             '`~skip` to **Skip** current track \n' +
                             '`~loop` to **Loop** current track \n' +
                             '`~loopoff` to **Stop Looping** current track \n' +
-                            '`~dis or ~disconnect` to **Disconect** bot\n\n' +
+                            '`~dis/disconnect/leave` to **Disconect** bot\n' +
+                            '`~pause/resume` to **Pause** or **Resume** current track\n\n' +
                             '**:label: Tags** (Not stable)\n' +
                             '`~tag add [name] [description]` to **Add** tag \n' + 
                             '`~tag edit [name] [description]` to **Edit** tag \n' +
