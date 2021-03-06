@@ -56,17 +56,19 @@ music.execute(client);
 client.on('ready', () => {
   console.log("Bot is ready!!!");
   let statusCounter = 0;
-  const statuses = ['迎春花', '财神到', '春风吻上我得脸', '大发财', '贺新年', '大团圆'];
+  client.user.setActivity(`奇怪的知识增加了` + '| ~help', { type: 'WATCHING' });
 
-  const statusItv = setInterval(updateStatus, 300000);
+  // const statuses = ['Mr & Mrs Gao', 'Kurzgesagt – In a Nutshell', 'TEDx Talks', 'Vsauce', 'Li Ke Tai Tai', 'Veritasium'];
 
-  function updateStatus() {
-    client.user.setActivity(`${statuses[statusCounter]} ` + '| ~help', { type: 'LISTENING' });
-    if (statusCounter == statuses.length - 1) {
-      statusCounter = -1;
-    }
-    statusCounter++;
-  }
+  // const statusItv = setInterval(updateStatus, 300000);
+
+  // function updateStatus() {
+  //   client.user.setActivity(`${statuses[statusCounter]} ` + '| ~help', { type: 'LISTENING' });
+  //   if (statusCounter == statuses.length - 1) {
+  //     statusCounter = -1;
+  //   }
+  //   statusCounter++;
+  // }
 });
 
 //Useful functions command

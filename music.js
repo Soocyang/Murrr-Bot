@@ -7,12 +7,13 @@ const PREFIX = '~'
 // Testing Music Bot
 let connection;
 let dispatcher;
+let nowPlayingEmbed = 0;
 let isPlaying = 0;
 let songQueue = [];
 let loopFlag = 0;
 const streamOptions = {
     seek: 0,
-    volumn: 0.5,
+    volumn: 0.25,
     highWaterMark: 1
 }
 
@@ -166,6 +167,18 @@ module.exports = {
 
         async function playSong(msg, connection, voiceChannel) {
 
+            //Remove previous Now Playing Embed
+
+            msg.channel.messages.fetch({ around: `${nowPlayingEmbed}`, limit: 1 })
+                .then(messages => {
+                    messages.first().delete();
+                }).catch(error => {
+                    if (error.name === "TypeError")
+                        console.log(`Bot is playing music in server: ${msg.channel.guild}`);
+                    else
+                        console.log(error);
+                });
+
             const currentTrack = songQueue[0];
             const stream = ytdl(currentTrack.url, { filter: 'audio', quality: 'highestaudio', highWaterMark: 1 << 25 });
 
@@ -179,7 +192,11 @@ module.exports = {
                 .addField('Song duration', `⌚ ${currentTrack.duration}`, true)
                 .addField('Channel', `🎤 ${currentTrack.author.name}`, true)
                 .setFooter(`Requested by ${currentTrack.username}`, `${currentTrack.userpic}`);
-            msg.channel.send(embed);
+
+
+            msg.channel.send(embed).then(sentMessage => {
+                nowPlayingEmbed = sentMessage.id;
+            });
 
             //console.log(stream);
 
@@ -189,8 +206,13 @@ module.exports = {
                     songQueue.shift();
                     setTimeout(() => {
                         if (songQueue.length == 0) {
-                            isPlaying = 0;
+                            msg.channel.messages.fetch({ around: `${nowPlayingEmbed}`, limit: 1 })
+                                .then(messages => {
+                                    messages.first().delete();
+                                })
                             msg.channel.send('The queue is empty now! Play some song now!')
+                            isPlaying = 0;
+                            nowPlayingEmbed = 0;
                         }
                         else {
                             playSong(msg, connection, voiceChannel);
