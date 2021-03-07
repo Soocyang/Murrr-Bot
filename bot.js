@@ -136,7 +136,10 @@ function checkArgs(msg, args) {
 /**Testing-Playground**/
 
 
-
 //Login bot
-client.login(process.env.BOT_TOKEN);
+setTimeout(() => {
+  client.login(process.env.BOT_TOKEN);
+}, 30000);
+
+
 
