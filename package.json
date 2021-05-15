@@ -19,7 +19,7 @@
     "randomcolor": "^0.6.2",
     "sequelize": "^6.3.5",
     "sqlite3": "^5.0.0",
-    "yt-search": "^2.5.1",
+    "yt-search": "^2.8.0",
     "ytdl-core": "^4.4.5"
   },
   "devDependencies": {
