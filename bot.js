@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 
 const music = require('./music.js');
 const fetch = require('node-fetch');
@@ -33,28 +33,28 @@ const Tags = sequelize.define('tags', {
 
 client.once('ready', () => {
   Tags.sync();
-})
+});
 
-const PREFIX = '~'
+const PREFIX = '~';
 
 const fs = require('fs');
 const { url } = require('inspector');
 client.commands = new Discord.Collection();
-const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
+const commandFiles = fs
+  .readdirSync('./commands/')
+  .filter((file) => file.endsWith('.js'));
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
 
   client.commands.set(command.name, command);
 }
 
-
 //Execute Music feature
 music.execute(client);
 
-
 //Bot activity status
 client.on('ready', () => {
-  console.log("Bot is ready!!!");
+  console.log('Bot is ready!!!');
   let statusCounter = 0;
   client.user.setActivity(`奇怪的知识增加了` + '| ~help', { type: 'WATCHING' });
 
@@ -72,11 +72,9 @@ client.on('ready', () => {
 });
 
 //Useful functions command
-client.on('message', async msg => {
-
+client.on('message', async (msg) => {
   //Default message reply memes
   client.commands.get('defaultCmd').execute(msg);
-
 
   if (!msg.content.startsWith(PREFIX) || msg.author.bot) return;
   const args = msg.content.slice(PREFIX.length).trim().split(' ');
@@ -84,7 +82,9 @@ client.on('message', async msg => {
 
   // equivalent to: SELECT * FROM tags WHERE name = 'tagName' LIMIT 1;
   try {
-    const tag = await Tags.findOne({ where: { name: command, guildId: msg.guild.id } });
+    const tag = await Tags.findOne({
+      where: { name: command, guildId: msg.guild.id },
+    });
     if (tag) {
       // equivalent to: UPDATE tags SET usage_count = usage_count + 1 WHERE name = 'tagName';
       tag.increment('usage_count');
@@ -98,33 +98,27 @@ client.on('message', async msg => {
   if (command === 'args-info') {
     checkArgs(msg, args);
     msg.channel.send(`Command name: ${command}\nArguments: ${args}`);
-  }
-  else if (command === 'clearchat') {
+  } else if (command === 'clearchat') {
     checkArgs(msg, args);
     client.commands.get('clearchat').execute(msg, args);
     //clearChat(msg, args);
-  }
-  else if (command === 'help') {
+  } else if (command === 'help') {
     client.commands.get('help').execute(msg, client);
-  }
-  else if (command === 'avatar') {
+  } else if (command === 'avatar') {
     checkArgs(msg, args);
     client.commands.get('avatar').execute(msg, args);
-  }
-  else if (command === 'tag') {
+  } else if (command === 'tag') {
     client.commands.get('tag').execute(msg, args, client);
-  }
-  else if (command === 'ping') {
+  } else if (command === 'ping') {
     client.commands.get('ping').execute(msg, args);
-  }
-  else if (command === 'guild') {
+  } else if (command === 'guild') {
     msg.channel.send(msg.guild.id);
-  }
-  else if (command === 'cat') {
-    const { file } = await fetch('https://aws.random.cat/meow').then(response => response.json());
+  } else if (command === 'cat') {
+    const { file } = await fetch('https://aws.random.cat/meow').then(
+      (response) => response.json()
+    );
     msg.channel.send(file);
   }
-
 });
 
 function checkArgs(msg, args) {
@@ -135,11 +129,7 @@ function checkArgs(msg, args) {
 
 /**Testing-Playground**/
 
-
 //Login bot
 setTimeout(() => {
   client.login(process.env.BOT_TOKEN);
 }, 30000);
-
-
-
